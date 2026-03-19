@@ -1,0 +1,191 @@
+.admin-container {
+  background-color: var(--bg-light);
+  min-height: 100vh;
+  padding: var(--spacing-lg);
+}
+
+.admin-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-xl);
+  border-radius: 8px;
+  margin-bottom: var(--spacing-xl);
+}
+
+.admin-header h1 {
+  color: white;
+  margin: 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.stat-card {
+  background-color: white;
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid var(--primary-color);
+}
+
+.stat-card.warning {
+  border-left-color: var(--warning-color);
+}
+
+.stat-card.danger {
+  border-left-color: var(--danger-color);
+}
+
+.stat-card h3 {
+  color: var(--text-light);
+  font-size: 14px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.tab-btn {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: var(--text-light);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.tab-btn.active {
+  border-bottom-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.tab-btn:hover {
+  color: var(--primary-color);
+}
+
+.admin-content {
+  background-color: white;
+  padding: var(--spacing-xl);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.medicines-table, .alerts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--spacing-lg);
+}
+
+.medicines-table th, .alerts-table th {
+  background-color: var(--bg-light);
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.medicines-table td, .alerts-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.medicines-table tr:hover, .alerts-table tr:hover {
+  background-color: var(--bg-light);
+}
+
+.low-stock {
+  color: var(--danger-color);
+  font-weight: 600;
+}
+
+.action-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.btn-small {
+  padding: 4px 8px;
+  font-size: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-info {
+  background-color: #0066cc;
+  color: white;
+}
+
+.btn-success {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.stock-form {
+  background-color: var(--bg-light);
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 200px;
+  gap: var(--spacing-md);
+  align-items: end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-dark);
+}
+
+.form-group input, .form-group select {
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+
+.empty-msg {
+  text-align: center;
+  color: var(--text-light);
+  padding: var(--spacing-xl);
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-tabs {
+    flex-wrap: wrap;
+  }
+
+  .stock-form {
+    grid-template-columns: 1fr;
+  }
+
+  .medicines-table, .alerts-table {
+    font-size: 12px;
+  }
+}

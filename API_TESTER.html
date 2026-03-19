@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy API Tester</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            margin-bottom: 30px;
+            color: #0066cc;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 13px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #0066cc;
+            box-shadow: 0 0 0 3px rgba(0,102,204,0.1);
+        }
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-primary {
+            background: #0066cc;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #004499;
+        }
+        .btn-secondary {
+            background: #e0e0e0;
+            color: #333;
+        }
+        .btn-secondary:hover {
+            background: #d0d0d0;
+        }
+        .response {
+            background: #f9f9f9;
+            border-left: 4px solid #0066cc;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            word-break: break-all;
+        }
+        .response.error {
+            border-left-color: #cc3333;
+            background: #fee;
+        }
+        .response.success {
+            border-left-color: #00aa66;
+            background: #efe;
+        }
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .health-status {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .status-badge.online {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-badge.offline {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 Pharmacy AI - API Tester</h1>
+
+        <!-- Health Check -->
+        <div class="health-status">
+            <button class="btn-primary" onclick="checkHealth()" style="margin-bottom: 10px;">Check Backend Health</button>
+            <div id="healthResult"></div>
+        </div>
+
+        <!-- Test Registration -->
+        <div class="card">
+            <h2>📝 Test Registration</h2>
+            
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" id="firstName" value="Khushi" placeholder="First name">
+            </div>
+            
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" id="lastName" value="Singh" placeholder="Last name">
+            </div>
+            
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" value="khushi@test.com" placeholder="email@example.com">
+            </div>
+            
+            <div class="two-col">
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="phone" value="9876543210" placeholder="Phone number">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" value="password123" placeholder="Password">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Address</label>
+                <textarea id="address" rows="2">123 Main Street</textarea>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-primary" onclick="testRegister()">🚀 Test Register</button>
+                <button class="btn-secondary" onclick="generateTestData()">🔄 Generate Random Data</button>
+            </div>
+            
+            <div id="registerResponse" class="response" style="display:none;"></div>
+        </div>
+
+        <!-- Test Login -->
+        <div class="card">
+            <h2>🔐 Test Login</h2>
+            
+            <div class="two-col">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" value="khushi@test.com" placeholder="email@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" value="password123" placeholder="Password">
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-primary" onclick="testLogin()">🔓 Get All Customers</button>
+                <button class="btn-secondary" onclick="clearLoginResponse()">Clear</button>
+            </div>
+            
+            <div id="loginResponse" class="response" style="display:none;"></div>
+        </div>
+
+        <!-- Get Single Customer -->
+        <div class="card">
+            <h2>👤 Get Customer by ID</h2>
+            
+            <div class="form-group">
+                <label>Customer ID</label>
+                <input type="text" id="customerId" placeholder="Enter customer ID from registration response">
+            </div>
+            
+            <div class="button-group">
+                <button class="btn-primary" onclick="getCustomer()">🔍 Get Customer</button>
+                <button class="btn-secondary" onclick="clearCustomerResponse()">Clear</button>
+            </div>
+            
+            <div id="customerResponse" class="response" style="display:none;"></div>
+        </div>
+
+        <!-- Get All Customers -->
+        <div class="card">
+            <h2>📋 Get All Customers</h2>
+            
+            <div class="button-group">
+                <button class="btn-primary" onclick="getAllCustomers()">📊 Get All Customers</button>
+                <button class="btn-secondary" onclick="clearAllCustomersResponse()">Clear</button>
+            </div>
+            
+            <div id="allCustomersResponse" class="response" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000';
+
+        async function checkHealth() {
+            try {
+                const response = await fetch(`${API_URL}/api/health`);
+                const data = await response.json();
+                const statusEl = document.getElementById('healthResult');
+                statusEl.innerHTML = `
+                    <span class="status-badge online">✅ Backend Online</span><br>
+                    <small style="color: #666; margin-top: 10px; display: block;">${data.status}</small>
+                `;
+            } catch (error) {
+                const statusEl = document.getElementById('healthResult');
+                statusEl.innerHTML = `
+                    <span class="status-badge offline">❌ Backend Offline</span><br>
+                    <small style="color: #666; margin-top: 10px; display: block;">Cannot connect to ${API_URL}</small>
+                `;
+            }
+        }
+
+        function generateTestData() {
+            const timestamp = Date.now();
+            document.getElementById('firstName').value = 'Test';
+            document.getElementById('lastName').value = 'User' + timestamp;
+            document.getElementById('email').value = `test${timestamp}@example.com`;
+            document.getElementById('phone').value = '9876543210';
+            document.getElementById('address').value = '123 Test Street, Test City';
+            document.getElementById('password').value = 'password123';
+        }
+
+        async function testRegister() {
+            const data = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phoneNumber: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                password: document.getElementById('password').value
+            };
+
+            console.log('Sending:', data);
+
+            try {
+                const response = await fetch(`${API_URL}/api/customers/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                const respEl = document.getElementById('registerResponse');
+                respEl.style.display = 'block';
+                
+                if (response.ok) {
+                    respEl.className = 'response success';
+                    respEl.innerHTML = `<strong>✅ Success!</strong>\n\n${JSON.stringify(result, null, 2)}`;
+                    // Save customer ID to other field
+                    if (result.customerId) {
+                        document.getElementById('customerId').value = result.customerId;
+                    }
+                } else {
+                    respEl.className = 'response error';
+                    respEl.innerHTML = `<strong>❌ Error (${response.status})</strong>\n\n${JSON.stringify(result, null, 2)}`;
+                }
+            } catch (error) {
+                const respEl = document.getElementById('registerResponse');
+                respEl.style.display = 'block';
+                respEl.className = 'response error';
+                respEl.innerHTML = `<strong>❌ Network Error</strong>\n\n${error.message}\n\nMake sure backend is running on ${API_URL}`;
+            }
+        }
+
+        async function testLogin() {
+            try {
+                const response = await fetch(`${API_URL}/api/customers`);
+                const result = await response.json();
+                const respEl = document.getElementById('loginResponse');
+                respEl.style.display = 'block';
+                
+                if (response.ok) {
+                    respEl.className = 'response success';
+                    respEl.innerHTML = `<strong>✅ Got ${result.count} customers</strong>\n\n${JSON.stringify(result, null, 2)}`;
+                } else {
+                    respEl.className = 'response error';
+                    respEl.innerHTML = `<strong>❌ Error</strong>\n\n${JSON.stringify(result, null, 2)}`;
+                }
+            } catch (error) {
+                const respEl = document.getElementById('loginResponse');
+                respEl.style.display = 'block';
+                respEl.className = 'response error';
+                respEl.innerHTML = `<strong>❌ Network Error</strong>\n\n${error.message}`;
+            }
+        }
+
+        async function getCustomer() {
+            const id = document.getElementById('customerId').value;
+            if (!id) {
+                alert('Please enter customer ID');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/api/customers/${id}`);
+                const result = await response.json();
+                const respEl = document.getElementById('customerResponse');
+                respEl.style.display = 'block';
+                
+                if (response.ok) {
+                    respEl.className = 'response success';
+                    respEl.innerHTML = `<strong>✅ Customer Found</strong>\n\n${JSON.stringify(result, null, 2)}`;
+                } else {
+                    respEl.className = 'response error';
+                    respEl.innerHTML = `<strong>❌ Error</strong>\n\n${JSON.stringify(result, null, 2)}`;
+                }
+            } catch (error) {
+                const respEl = document.getElementById('customerResponse');
+                respEl.style.display = 'block';
+                respEl.className = 'response error';
+                respEl.innerHTML = `<strong>❌ Network Error</strong>\n\n${error.message}`;
+            }
+        }
+
+        async function getAllCustomers() {
+            try {
+                const response = await fetch(`${API_URL}/api/customers`);
+                const result = await response.json();
+                const respEl = document.getElementById('allCustomersResponse');
+                respEl.style.display = 'block';
+                
+                if (response.ok) {
+                    respEl.className = 'response success';
+                    respEl.innerHTML = `<strong>✅ Got ${result.count} customers</strong>\n\n${JSON.stringify(result, null, 2)}`;
+                } else {
+                    respEl.className = 'response error';
+                    respEl.innerHTML = `<strong>❌ Error</strong>\n\n${JSON.stringify(result, null, 2)}`;
+                }
+            } catch (error) {
+                const respEl = document.getElementById('allCustomersResponse');
+                respEl.style.display = 'block';
+                respEl.className = 'response error';
+                respEl.innerHTML = `<strong>❌ Network Error</strong>\n\n${error.message}`;
+            }
+        }
+
+        function clearLoginResponse() { document.getElementById('loginResponse').style.display = 'none'; }
+        function clearCustomerResponse() { document.getElementById('customerResponse').style.display = 'none'; }
+        function clearAllCustomersResponse() { document.getElementById('allCustomersResponse').style.display = 'none'; }
+
+        // Check health on load
+        window.addEventListener('load', checkHealth);
+    </script>
+</body>
+</html>
